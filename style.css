@@ -1,4 +1,6 @@
-*{
+*,
+*::after,
+*::before{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -11,11 +13,20 @@ html{
     --primary-color:rgb(36, 40, 66);
     --primary-gradient: linear-gradient(to right, #272780de 0%, #3b3256 100%); 
     --primary-gradient-hover: linear-gradient(to right,   #3b3256 0%, #272780de 100%); 
+   --bar-width:2rem;
+   --bar-height:.3rem;
+   --hambarger-gap:.4rem;
+   --animation-timing:50ms ease-in-out;
+
 }
 
 .top-header{
     color: white;
     background-color: var(--primary-color);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
 }
 .top-header .wrapper{
     padding: 0 3rem;
@@ -31,6 +42,7 @@ html{
     justify-content: center;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 .top-header .nav-left h1{
     font-size: 2.5rem;
@@ -159,6 +171,74 @@ td, th {
      margin-right: 0.5rem;
 }
 
+.hambarger{
+display: flex;
+flex-direction: column;
+gap: var(--hambarger-gap);
+/* background-color:;  */
+width: max-content;
+ 
+top: 1.5rem;
+left: 2rem;
+z-index: 10;
+cursor: pointer;
+}
+.hambarger::before,
+.hambarger::after,
+.hambarger input{
+    content: "";
+    width: var(--bar-width);
+    height: var(--bar-height);
+    background-color: white;
+    transition: all var(--animation-timing);
+    transform-origin: left center;
+}
+.hambarger input{
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    outline: none;
+}
+.hambarger:has(input:checked)::before{
+    rotate: 45deg;
+}
+.hambarger:has(input:checked)::after{
+    rotate: -45deg;
+}
+.hambarger input:checked{
+    opacity: 0;
+     width: 0;
+}
+aside{
+    opacity: 0;
+}
+.hambarger:has(input:checked) + aside{
+   opacity: 1;
+}
+/* //
+side bar
+*/
+
+aside{
+    background-color: var(--primary-color);
+    height: 50%;
+    position: absolute;
+    z-index: 9;
+    top: 4rem;
+    left: 0;
+    width: 20rem;
+    height: 30rem;
+    margin-top: .2rem;
+ }
+aside ul li{
+    list-style: none;
+    color: white;
+    padding: 10px;
+    width: 100%;
+ }
+
+ 
 @media (max-width:500px){
     .container main header {
         flex-direction: column;
